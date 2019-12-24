@@ -1,13 +1,14 @@
 import React, { Fragment } from "react";
 import HeaderLogged from "../../../components/header_logged";
+import Notes from "../../../components/notes";
 
-const Notes = () => {
+const NotesScreen = () => {
   return (
     <Fragment>
       <HeaderLogged />
-      Notes Home
+      <Notes />
     </Fragment>
   );
 };
 
-export default Notes;
+export default NotesScreen;
