@@ -18,11 +18,18 @@ const Notes = props => {
     if (response.data.length >= 1) {
       setNotes(response.data.reverse());
       setCurrentNote(response.data[0]);
+    } else {
+      setNotes([]);
     }
   };
 
   const createNote = async params => {
     const note = await NotesService.create();
+    fetchNotes();
+  };
+
+  const deleteNote = async note => {
+    await NotesService.delete(note._id);
     fetchNotes();
   };
 
@@ -59,6 +66,7 @@ const Notes = props => {
             selectNote={selectNote}
             current_note={current_note}
             createNote={createNote}
+            deleteNote={deleteNote}
           />
         </Menu>
 
