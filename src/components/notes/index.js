@@ -13,34 +13,25 @@ const Notes = props => {
     id: ""
   });
 
-  // const fetchNotes = async () => {
-  //   const response = await NotesService.index();
-  //   if (response.data.length >= 1) {
-  //     setNotes(response.data.reverse());
-  //     setCurrentNote(response.data[0]);
-  //   }
-  // };
-  async function fetchNotes() {
+  const fetchNotes = async () => {
     const response = await NotesService.index();
     if (response.data.length >= 1) {
       setNotes(response.data.reverse());
       setCurrentNote(response.data[0]);
     }
-  }
+  };
 
-  function selectNote(id) {
+  const createNote = async params => {
+    const note = await NotesService.create();
+    fetchNotes();
+  };
+
+  const selectNote = id => {
     const note = notes.find(note => {
       return note._id == id;
     });
     setCurrentNote(note);
-  }
-
-  // const selectNote = id => {
-  //   const note = notes.find(note => {
-  //     return note._id == id;
-  //   });
-  //   setCurrentNote(note);
-  // };
+  };
 
   useEffect(() => {
     fetchNotes();
@@ -67,6 +58,7 @@ const Notes = props => {
             notes={notes}
             selectNote={selectNote}
             current_note={current_note}
+            createNote={createNote}
           />
         </Menu>
 
