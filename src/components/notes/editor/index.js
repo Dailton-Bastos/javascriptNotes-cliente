@@ -4,6 +4,20 @@ import "react-quill/dist/quill.snow.css"; // ES6
 
 const Editor = props => {
   const [currentContent, setCurrentContent] = useState("");
+  const [timer, setTimer] = useState(null);
+
+  const updateNote = content => {
+    const title = content.replace(/(<([^>]+)>)/gi, "").slice(0, 30);
+    props.updateNote(props.note, { title: title, body: content });
+  };
+
+  const handleChange = (content, delta, source) => {
+    clearTimeout(timer);
+    if (source == "user") {
+      setCurrentContent(content);
+      setTimer(setTimeout(() => updateNote(content), 2000));
+    }
+  };
 
   useEffect(() => {
     setCurrentContent(props.note.body);
@@ -26,7 +40,11 @@ const Editor = props => {
 
   return (
     <Fragment>
-      <ReactQuill value={currentContent} modules={modules} />
+      <ReactQuill
+        value={currentContent}
+        modules={modules}
+        onChange={handleChange}
+      />
     </Fragment>
   );
 };
